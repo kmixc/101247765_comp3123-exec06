@@ -1,11 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const DB_URL = "mongodb+srv://sa:s3cr3t@cluster0.qa3t4.mongodb.net/gbc-fall2020?retryWrites=true&w=majority"
+const notesRoutes = require('./routes/NoteRoutes.js')
+
+const DB_URL = "mongodb+srv://kmixc:Reloop2001@cluster0.ijglg.mongodb.net/notes-app?retryWrites=true&w=majority"
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+
+app.use(express.json())
+app.use('/', notesRoutes)
 
 mongoose.Promise = global.Promise;
 
@@ -14,7 +16,7 @@ mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log("Successfully connected to the database mongoDB Atlas Server");    
+    console.log("Successfully connected to the database mongoDB Atlas Server");
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
@@ -27,5 +29,5 @@ app.get('/', (req, res) => {
 
 
 app.listen(8081, () => {
-    console.log("Server is listening on port 3000");
+    console.log("Server is listening on port 8081");
 });
